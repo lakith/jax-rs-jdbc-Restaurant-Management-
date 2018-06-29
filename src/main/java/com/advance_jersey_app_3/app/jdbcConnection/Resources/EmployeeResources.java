@@ -14,11 +14,15 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import com.advance_jersey_app_3.app.jdbcConnection.models.Employee;
 import com.advance_jersey_app_3.app.jdbcConnection.services.EmployeeService;
+import org.glassfish.jersey.server.Uri;
+import org.glassfish.jersey.server.spi.Container;
 
 @Path("employees")
 @Produces(MediaType.APPLICATION_JSON)
@@ -39,7 +43,14 @@ public class EmployeeResources {
 	public Response displayEmployee (@PathParam("emp_id") int emp_id) throws ClassNotFoundException, SQLException{
 		Employee emp = employeeService.getEmployee(emp_id);
 		return Response.ok(emp).build();
-	} 
+	}
+
+    @GET
+	@Path("/name/{empName: [a-zA-Z][a-zA-Z_0-9]*}")
+	public Response displayEmployeeFromName (@PathParam("empName") String name) throws SQLException, ClassNotFoundException {
+       Employee emp = employeeService.getEmployeeFromName(name);
+       return Response.ok(emp).build();
+	}
 	
 	@POST
 	public Response createEmployee(Employee emp) throws ClassNotFoundException, SQLException{
@@ -76,6 +87,27 @@ public class EmployeeResources {
 			return Response.ok(jsonObject).build();
 		}
 	}
+
+    @GET
+	@Path("/url")
+	@Produces(MediaType.TEXT_PLAIN)
+    public String displayUriInfo(@Context UriInfo uriInfo)
+	{
+		String path = uriInfo.getAbsolutePath().toString();
+		return  path;
+	}
+
+
+	@Path("/{emp_id}/order")
+	public OrderResources getOrderDetails()
+	{
+		return new OrderResources();
+	}
+
+
+
+
+
 
 	
 }

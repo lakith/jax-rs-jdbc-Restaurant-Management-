@@ -29,5 +29,8 @@ public class EmployeeService {
 	public int deleteEmployee(int emp_id) throws ClassNotFoundException, SQLException{
 		return employeeDAO.deleteEmployee(emp_id);
 	}
-	
+
+	public Employee getEmployeeFromName (String name) throws SQLException, ClassNotFoundException {
+		return employeeDAO.getEmployeeFromName(name);
+	}
 }

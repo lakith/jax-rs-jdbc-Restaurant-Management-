@@ -8,7 +8,7 @@ import javax.ws.rs.ext.Provider;
 
 import com.advance_jersey_app_3.app.jdbcConnection.models.ErrorMessage;
 
-@Provider
+
 public class GenaricExeptionMapper implements ExceptionMapper<Throwable> {
 
 	@Override

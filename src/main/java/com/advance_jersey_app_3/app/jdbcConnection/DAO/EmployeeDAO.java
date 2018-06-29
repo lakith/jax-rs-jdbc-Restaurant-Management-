@@ -84,4 +84,20 @@ public class EmployeeDAO {
 		return preparedStatement.executeUpdate();
 	}
 
+	@Transactional
+	public Employee getEmployeeFromName(String name) throws SQLException, ClassNotFoundException {
+		Connection conn = DBConnection.getDBConnection().getConnection();
+		String sql = "Select * From employee where name= ?";
+		PreparedStatement preparedStatement = conn.prepareStatement(sql);
+		preparedStatement.setObject(1,name);
+		ResultSet rst = preparedStatement.executeQuery();
+
+		if(rst.next()){
+			Employee emp = new Employee(rst.getString("name"),rst.getString("email"),rst.getString("tel_no"),rst.getString("Address"),rst.getInt("age"));
+			return emp;
+		}else{
+			return null;
+		}
+	}
+
 }
