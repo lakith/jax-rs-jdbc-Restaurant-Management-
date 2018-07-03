@@ -23,14 +23,14 @@ public class EmployeeResources {
 
     private EmployeeService employeeService = new EmployeeService();
 
+
     @GET
     public Response displayEmployees() throws ClassNotFoundException, SQLException {
         List<Employee> emp = employeeService.getAllEmployees();
         RedisImpl redisimpl = new RedisImpl();
         redisimpl.setRadies("employees",emp);
-        List<Employee> emmnew = new ArrayList<Employee>();
-        emmnew.addAll((Collection<? extends Employee>) redisimpl.getObjectValue("Employees"));
-        return Response.ok(emmnew).build();
+
+        return Response.ok(emp).build();
     }
 
     @GET

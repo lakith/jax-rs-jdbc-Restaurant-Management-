@@ -1,5 +1,6 @@
 package com.advance_jersey_app_3.app.jdbcConnection.DAO;
 
+import java.util.Collection;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,23 +12,36 @@ import java.util.ArrayList;
 import javax.transaction.Transactional;
 
 import com.advance_jersey_app_3.app.jdbcConnection.DatabaseCon.DBConnection;
+import com.advance_jersey_app_3.app.jdbcConnection.Redis.RedisImpl;
 import com.advance_jersey_app_3.app.jdbcConnection.models.Employee;
 
 public class EmployeeDAO {
-	
+
+	RedisImpl redis = new RedisImpl();
+
 	@Transactional
 	public List<Employee> getAllEmployees() throws ClassNotFoundException, SQLException
 	{
-		Connection conn=DBConnection.getDBConnection().getConnection();
-        Statement stm=conn.createStatement();
-        ResultSet rst=stm.executeQuery("Select * From employee");
-        ArrayList<Employee> emp = new ArrayList<Employee>();
-        
-        while(rst.next()){
-        	Employee employee = new Employee(rst.getString("name"),rst.getString("email"),rst.getString("tel_no"),rst.getString("Address"),rst.getInt("age"));
-        	emp.add(employee);
-        }
-        return emp; 
+
+		if(redis.checkData("employees"))
+		{
+			List<Employee> emmnew = new ArrayList<Employee>();
+			emmnew.addAll((Collection<? extends Employee>) redis.getObjectValue("employees"));
+			return  emmnew;
+		}
+		else {
+			Connection conn = DBConnection.getDBConnection().getConnection();
+			Statement stm = conn.createStatement();
+			ResultSet rst = stm.executeQuery("Select * From employee");
+			ArrayList<Employee> emp = new ArrayList<Employee>();
+			redis.setRadies("employees",emp);
+
+			while (rst.next()) {
+				Employee employee = new Employee(rst.getString("name"), rst.getString("email"), rst.getString("tel_no"), rst.getString("Address"), rst.getInt("age"));
+				emp.add(employee);
+			}
+			return emp;
+		}
 	}
 	
 	@Transactional

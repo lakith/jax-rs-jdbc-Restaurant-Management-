@@ -17,8 +17,12 @@ public class RedisImpl {
         return fromBytes(jedis.get(key.getBytes()));
     }
 
+    public boolean checkData(String key){
+        return jedis.exists(key.getBytes());
+    }
+
     public Object fromBytes(byte key[]) {
-        Object obj = "sdsad";
+        Object obj = null;
         if(key!=null)
         {
             try {
