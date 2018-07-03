@@ -18,4 +18,8 @@ public class OrderService {
         return ordersDAO.getOrder(emp_id,orderId);
     }
 
+    public int saveOrder(int emp_id, Orders order) throws SQLException, ClassNotFoundException {
+        return ordersDAO.saveOrder(emp_id,order);
+    }
+
 }

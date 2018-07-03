@@ -29,8 +29,18 @@ public class OrderResources {
     }
 
     @POST
-    public Response addAOrder(@PathParam("emp_id") int emp_id){
-        
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addAOrder(@PathParam("emp_id") int emp_id, Orders order) throws SQLException, ClassNotFoundException {
+       int success = orderService.saveOrder(emp_id, order);
+        if(success == 1){
+            JsonObject jsonObject = Json.createObjectBuilder().add("Status","Order addition success").build();
+            return Response.ok(jsonObject).build();
+        } else {
+            JsonObject jsonObject = Json.createObjectBuilder().add("Status","Order addition failed").build();
+            return Response.ok(jsonObject).build();
+        }
+
     }
 
 

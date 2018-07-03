@@ -4,9 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 
-public class Employee {
-	
+public class Employee implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int emp_id=0;
@@ -88,6 +89,16 @@ public class Employee {
 	public void setEmp_id(int emp_id) {
 		this.emp_id = emp_id;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Employee{" +
+				"emp_id=" + emp_id +
+				", name='" + name + '\'' +
+				", email='" + email + '\'' +
+				", tel_no='" + tel_no + '\'' +
+				", Address='" + Address + '\'' +
+				", age=" + age +
+				'}';
+	}
 }

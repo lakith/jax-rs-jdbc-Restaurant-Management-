@@ -58,4 +58,18 @@ public class OrdersDAO {
         }
 
     }
+
+    public int saveOrder(int emp_id, Orders order) throws SQLException, ClassNotFoundException {
+        Connection conn = DBConnection.getDBConnection().getConnection();
+        Statement stm = conn.createStatement();
+        String sql = "Insert into orders (orderName,location,customer,contactNumber,employee) values " +
+                "(?,?,?,?,?)";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setObject(1,order.getOrderName());
+        preparedStatement.setObject(2,order.getLocation());
+        preparedStatement.setObject(3,order.getCustomer());
+        preparedStatement.setObject(4,order.getEmployeeHandle());
+        preparedStatement.setObject(5,emp_id);
+        return preparedStatement.executeUpdate();
+    }
 }
