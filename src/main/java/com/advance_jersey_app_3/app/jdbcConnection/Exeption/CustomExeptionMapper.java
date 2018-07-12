@@ -16,7 +16,7 @@ import javax.ws.rs.ext.Provider;
 public class CustomExeptionMapper implements ExceptionMapper<CustomExeption> {
     @Override
     public Response toResponse(CustomExeption customExeption) {
-        ErrorMessage customError = new ErrorMessage(customExeption.getMessage(),300,"https://www.google.com");
-        return Response.status(300).type(MediaType.APPLICATION_JSON).entity(customError).build();
+        ErrorMessage customError = new ErrorMessage(customExeption.getMessage(),225,"https://www.google.com");
+        return Response.status(customError.getErrorCode()).type(MediaType.APPLICATION_JSON).entity(customError).build();
     }
 }
