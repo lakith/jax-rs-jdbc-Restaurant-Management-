@@ -34,12 +34,13 @@ public class EmployeeDAO {
 			Statement stm = conn.createStatement();
 			ResultSet rst = stm.executeQuery("Select * From employee");
 			ArrayList<Employee> emp = new ArrayList<Employee>();
-			redis.setRadies("employees",emp);
+
 
 			while (rst.next()) {
 				Employee employee = new Employee(rst.getString("name"), rst.getString("email"), rst.getString("tel_no"), rst.getString("Address"), rst.getInt("age"));
 				emp.add(employee);
 			}
+            redis.setRadies("employees",emp);
 			return emp;
 		}
 	}

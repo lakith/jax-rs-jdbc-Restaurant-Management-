@@ -8,19 +8,39 @@ public class RedisImpl {
 
     private static Jedis jedis = new Jedis("localhost");
 
+    /**
+     * inset values to redis server
+     * @param key
+     * @param object
+     */
     public void setRadies(String key , Object object){
 
         jedis.set(key.getBytes(),toBytes(object));
     }
 
+    /**
+     * get objects from redis server by key
+     * @param key
+     * @return
+     */
     public Object getObjectValue(String key) {
         return fromBytes(jedis.get(key.getBytes()));
     }
 
+    /**
+     * check availability of the key
+     * @param key
+     * @return
+     */
     public boolean checkData(String key){
         return jedis.exists(key.getBytes());
     }
 
+    /**
+     * convert byte array to object
+     * @param key
+     * @return
+     */
     public Object fromBytes(byte key[]) {
         Object obj = null;
         if(key!=null)
@@ -38,6 +58,11 @@ public class RedisImpl {
         return obj;
     }
 
+    /**
+     * object to byte array
+     * @param object
+     * @return
+     */
     public byte[] toBytes(Object object){
 
         ByteArrayOutputStream baos;

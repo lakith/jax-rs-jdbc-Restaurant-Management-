@@ -1,7 +1,6 @@
 package com.advance_jersey_app_3.app.jdbcConnection.Resources;
 
-import com.advance_jersey_app_3.app.jdbcConnection.Client.RedisClient;
-import com.advance_jersey_app_3.app.jdbcConnection.Redis.RedisImpl;
+import com.advance_jersey_app_3.app.jdbcConnection.Exeption.CustomExeption;
 import com.advance_jersey_app_3.app.jdbcConnection.models.Employee;
 
 import javax.json.Json;
@@ -12,25 +11,32 @@ import javax.ws.rs.core.*;
 import com.advance_jersey_app_3.app.jdbcConnection.services.EmployeeService;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Path("employees")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@Produces(value = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+@Consumes(value = {MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 public class EmployeeResources {
 
     private EmployeeService employeeService = new EmployeeService();
 
+    /**
+     * this shows how to customize error..
+     * @return custom error message
+     */
+    @GET
+    @Path("cusexept")
+    public Response exept(){
+        throw  new CustomExeption("message");
+
+    }
 
     @GET
     public Response displayEmployees() throws ClassNotFoundException, SQLException {
         List<Employee> emp = employeeService.getAllEmployees();
-        RedisImpl redisimpl = new RedisImpl();
-        redisimpl.setRadies("employees",emp);
 
-        return Response.ok(emp).build();
+
+        return Response.status(200).entity(emp).build();
     }
 
     @GET
@@ -84,7 +90,7 @@ public class EmployeeResources {
         }
     }
 
-    @GET
+/*    @GET
     @Path("/url")
     @Produces(MediaType.TEXT_PLAIN)
     public String displayUriInfo(@Context UriInfo uriInfo) {
@@ -92,7 +98,7 @@ public class EmployeeResources {
         RedisClient rsc = new RedisClient();
         System.out.println(rsc.getCache("namre"));
         return path;
-    }
+    }*/
 
 
     @GET
