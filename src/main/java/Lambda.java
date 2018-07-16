@@ -11,7 +11,7 @@ class Running {
         public static void main(String[] arg) {
             /*
             ////////////////////////////////////////////////////////////////////////////
-            // whrn using lambda in anonyms classes,before 8 and using lambda
+            // when using lambda in anonyms classes,before 8 and using lambda
             ////////////////////////////////////////////////////////////////////////////
             Running running = new Running();
             running.lamb(new Going() {
