@@ -9,7 +9,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 /**
- * mapper vclass of the custom method
+ * mapper class of the custom method
  * author:dhananjaya
  */
 @Provider
